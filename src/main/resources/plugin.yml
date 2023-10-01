@@ -1,0 +1,6 @@
+name: 'ExpDrop'
+version: '${projectVersion}'
+description: 'Drops all experience points or converts it to exp bottles'
+author: 'CyntrixAlgorithm'
+api-version: 1.17
+main: 'com.github.devcyntrix.expdrop.ExpDropPlugin'
