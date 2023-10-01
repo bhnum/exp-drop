@@ -4,3 +4,10 @@ description: 'Drops all experience points or converts it to exp bottles'
 author: 'CyntrixAlgorithm'
 api-version: 1.17
 main: 'com.github.devcyntrix.expdrop.ExpDropPlugin'
+commands:
+  expdrop:
+    description: 'Admin command for the ExpDrop plugin'
+    permission: 'expdrop.admin'
+    usage: '/<command> reload'
+    aliases:
+      - ed

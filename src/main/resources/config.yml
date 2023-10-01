@@ -1,0 +1,14 @@
+# Disables the natural minecraft mechanic which drops only 7 experience points per level, but maximal 100 exp
+# If you enable this feature, the player will drop all experience points. Keep in mind, that could players could
+# exploit this feature with the mending enchantment.
+drop-all-exp: false
+
+# This feature gives the possibility to reduce the dropped experience points. If it is set to 75.0, the player will lose
+# 25.0 percent of his experience points.
+keep-exp-percentage: 100.0
+
+# This feature converts the experience points to bottles. An exp bottle drops in average 7 experience points.
+convert-to-bottles: false
+
+# Do not touch this!
+config-version: 0
