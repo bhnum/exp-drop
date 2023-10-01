@@ -1,6 +1,10 @@
 package com.github.devcyntrix.expdrop;
 
+import com.github.devcyntrix.expdrop.controller.UpdateController;
 import com.github.devcyntrix.expdrop.util.ExpUtil;
+import com.github.devcyntrix.expdrop.view.update.AdminJoinNotificationView;
+import com.github.devcyntrix.expdrop.view.update.AdminNotificationView;
+import com.github.devcyntrix.expdrop.view.update.ConsoleNotificationView;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -22,6 +26,15 @@ import java.util.List;
 public class ExpDropPlugin extends JavaPlugin implements Listener {
 
     private ExpDropConfig config;
+    @Nullable
+    private UpdateController updateController;
+
+    @Override
+    public void onDisable() {
+        if(updateController != null) {
+            updateController.close();
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -36,9 +49,14 @@ public class ExpDropPlugin extends JavaPlugin implements Listener {
             reloadConfig();
         }
         this.config = ExpDropConfig.parse(getConfig());
-
         getServer().getPluginManager().registerEvents(this, this);
 
+        if (config.checkForUpdates()) {
+            this.updateController = new UpdateController(this, 112907);
+            this.updateController.subscribe(new AdminNotificationView(this));
+            this.updateController.subscribe(new ConsoleNotificationView(this, getLogger()));
+            getServer().getPluginManager().registerEvents(new AdminJoinNotificationView(this, updateController), this);
+        }
         new Metrics(this, 19941);
     }
 
@@ -51,9 +69,9 @@ public class ExpDropPlugin extends JavaPlugin implements Listener {
             try {
                 reloadConfig();
                 this.config = ExpDropConfig.parse(getConfig());
-                sender.sendMessage("§aExᴘᴅʀᴏᴘ §8» §7The config reload was §asuccessful§7.");
+                sender.sendMessage(getPrefix() + "§7The config reload was §asuccessful§7.");
             } catch (Exception e) {
-                sender.sendMessage("§aExᴘᴅʀᴏᴘ §8» §cSomething went wrong during the config reload.");
+                sender.sendMessage(getPrefix() + "§cSomething went wrong during the config reload.");
                 e.printStackTrace();
             }
             return true;
@@ -88,5 +106,9 @@ public class ExpDropPlugin extends JavaPlugin implements Listener {
         } else {
             event.setDroppedExp((int) Math.round(exp));
         }
+    }
+
+    public String getPrefix() {
+        return "§aExᴘᴅʀᴏᴘ §8» ";
     }
 }
