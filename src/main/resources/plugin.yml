@@ -1,6 +1,6 @@
 name: 'ExpDrop'
 version: '${projectVersion}'
-description: 'Drops all experience points or converts it to exp bottles'
+description: 'Drops all experience points or converts it to bottles o'' enchanting'
 website: 'https://www.spigotmc.org/resources/expdrop.112907/'
 author: 'CyntrixAlgorithm'
 api-version: 1.17
@@ -9,6 +9,10 @@ commands:
   expdrop:
     description: 'Admin command for the ExpDrop plugin'
     permission: 'expdrop.admin'
-    usage: '/<command> reload'
     aliases:
       - ed
+
+permissions:
+  expdrop.update:
+    description: 'Notifies the player about the plugin updates'
+    default: op
