@@ -5,6 +5,10 @@ check-for-updates: true
 # exploit this feature with the mending enchantment.
 drop-all-exp: false
 
+# This feature disables it to mend your items with the dropped experience points (including the dropped experience bottles)
+# It separates also the dropped experience bottles from the normal one. That means you cannot stack it anymore with other created one.
+mending-protection: false
+
 # This feature gives the possibility to reduce the dropped experience points. If it is set to 75.0, the player will lose
 # 25.0 percent of his experience points.
 keep-exp-percentage: 100.0
