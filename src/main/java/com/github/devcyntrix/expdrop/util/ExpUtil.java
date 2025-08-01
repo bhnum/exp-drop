@@ -36,4 +36,20 @@ public final class ExpUtil {
         return exp;
     }
 
+    // Give or take EXP
+    public static int changePlayerExp(Player player, int exp) {
+        // Get player's current exp
+        int currentExp = getPlayerExp(player);
+
+        // Reset player's current exp to 0
+        player.setExp(0);
+        player.setLevel(0);
+
+        // Give the player their exp back, with the difference
+        int newExp = Math.max(0, currentExp + exp);
+        player.giveExp(newExp);
+
+        // Return the player's new exp amount
+        return newExp;
+    }
 }

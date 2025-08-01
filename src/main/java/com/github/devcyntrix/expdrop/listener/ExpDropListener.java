@@ -32,19 +32,18 @@ public class ExpDropListener implements Listener {
         ExpDropConfig config = plugin.getExpDropConfig();
         Player player = event.getEntity();
 
-        double exp = event.getDroppedExp();
+        int exp = event.getDroppedExp();
         if (config.dropAllExp()) {
             exp = ExpUtil.getPlayerExp(player);
         }
 
-        exp *= config.keepExpRate();
+        exp = (int) Math.round(exp * (1 - config.keepExpRate()));
 
         if (!config.convertToBottles()) {
-            int droppedExp = (int) Math.round(exp);
-            event.setDroppedExp(droppedExp);
+            event.setDroppedExp(exp);
 
             if (player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY)) {
-                event.setNewExp(Math.max(0, event.getNewExp() - droppedExp));
+                ExpUtil.changePlayerExp(player, -exp);
             }
 
             if (event.getDroppedExp() > 0 && config.mendingProtection()) {
