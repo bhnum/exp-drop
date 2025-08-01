@@ -1,5 +1,6 @@
 package com.github.devcyntrix.expdrop.listener;
 
+import org.bukkit.GameRule;
 import com.github.devcyntrix.expdrop.ExpDropConfig;
 import com.github.devcyntrix.expdrop.ExpDropPlugin;
 import com.github.devcyntrix.expdrop.util.ExpUtil;
@@ -39,7 +40,13 @@ public class ExpDropListener implements Listener {
         exp *= config.keepExpRate();
 
         if (!config.convertToBottles()) {
-            event.setDroppedExp((int) Math.round(exp));
+            int droppedExp = (int) Math.round(exp);
+            event.setDroppedExp(droppedExp);
+
+            if (player.getWorld().getGameRuleValue(GameRule.KEEP_INVENTORY)) {
+                event.setNewExp(Math.max(0, event.getNewExp() - droppedExp));
+            }
+
             if (event.getDroppedExp() > 0 && config.mendingProtection()) {
                 player.getWorld().spawn(player.getLocation(), ExperienceOrb.class, experienceOrb -> {
                     experienceOrb.setExperience(event.getDroppedExp());
